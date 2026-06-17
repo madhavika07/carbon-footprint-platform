@@ -1,21 +1,15 @@
 document.getElementById('carbonForm').addEventListener('submit', function(e) {
     e.preventDefault();
 
-    // Data Extraction & Explicit Sanitization
-    const electricityRaw = document.getElementById('electricity').value;
-    const distanceRaw = document.getElementById('distance').value;
+    const electricity = parseFloat(document.getElementById('electricity').value);
+    const distance = parseFloat(document.getElementById('distance').value);
     const vehicleType = document.getElementById('vehicleType').value;
 
-    const electricity = parseFloat(electricityRaw);
-    const distance = parseFloat(distanceRaw);
-
-    // Strict Security Defenses Against Input Anomalies
     if (isNaN(electricity) || isNaN(distance) || electricity < 0 || distance < 0) {
-        alert("Invalid input parameters. Please insert positive numbers.");
+        alert("Please enter valid parameters.");
         return;
     }
 
-    // Official Mathematical Constants
     const electricityFactor = 0.85; 
     let vehicleFactor = 0.20;       
 
@@ -25,19 +19,15 @@ document.getElementById('carbonForm').addEventListener('submit', function(e) {
         vehicleFactor = 0.05;
     }
 
-    // Calculations
     const electricityImpact = electricity * electricityFactor;
     const transitImpact = distance * vehicleFactor;
     const totalImpact = electricityImpact + transitImpact;
 
-    // Interface Rendering
-    const scoreDisplay = document.getElementById('scoreDisplay');
-    scoreDisplay.innerText = totalImpact.toFixed(2);
+    document.getElementById('scoreDisplay').innerText = totalImpact.toFixed(2);
 
     const progressPercentage = Math.min((totalImpact / 1000) * 100, 100);
     document.getElementById('scoreBar').style.width = `${progressPercentage}%`;
 
-    // Secure Context-Aware Insights Injection
     const insightsList = document.getElementById('insightsList');
     insightsList.innerHTML = ''; 
 
